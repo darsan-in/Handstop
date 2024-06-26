@@ -1,7 +1,7 @@
 {
 	"name": "handstop",
 	"displayName": "Handstop",
-	"version": "0.0.3-a",
+	"version": "0.0.4-a",
 	"description": "Handbrake video encoder api for node js",
 	"main": "./dist/handstop.js",
 	"exports": {
@@ -37,7 +37,8 @@
 		"watch": "tsc --watch",
 		"clean": "cls && rimraf dist",
 		"deploy": "yarn build && yarn publish --access public && git push",
-		"postinstall": "./dist/bin/setup.js"
+		"postinstall": "node ./dist/bin/setup.js",
+		"posti": "node ./dist/bin/setup.js"
 	},
 	"keywords": [
 		"Handbrake",
