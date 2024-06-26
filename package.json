@@ -1,0 +1,62 @@
+{
+	"name": "handstop",
+	"displayName": "Handstop",
+	"version": "0.0.1a",
+	"description": "Handbrake video encoder api for node js",
+	"main": "./dist/handstop.js",
+	"exports": {
+		"import": "./dist/handstop.js",
+		"require": "./dist/handstop.js",
+		"types": "./dist/types/handstop.d.ts"
+	},
+	"files": [
+		"dist"
+	],
+	"directories": {
+		"lib": "./dist/lib"
+	},
+	"preferGlobal": true,
+	"bin": {
+		"handstop": "./dist/bin/setup.js"
+	},
+	"repository": "https://github.com/iamspdarsan/handstop",
+	"bugs": {
+		"url": "https://github.com/iamspdarsan/handstop/issues"
+	},
+	"author": "DARSAN <darsan@cresteem.com>",
+	"maintainers": [
+		"DARSAN <darsan@cresteem.com>"
+	],
+	"license": "GPL-3.0-only",
+	"private": false,
+	"scripts": {
+		"dev": "rimraf dist && tsc -p tscdev.json",
+		"dr": "cls && yarn dev && yarn rp",
+		"rp": "node ./dist/handstop.js",
+		"build": "cls && rimraf dist && tsc -p tsconfig.json",
+		"watch": "tsc --watch",
+		"clean": "cls && rimraf dist",
+		"deploy": "yarn build && yarn publish --access public && git push",
+		"postinstall": "node ./dist/bin/setup.js"
+	},
+	"keywords": [
+		"Handbrake",
+		"Video",
+		"Encoder",
+		"API",
+		"Converter",
+		"Compressor",
+		"Efficient"
+	],
+	"dependencies": {
+		"decompress": "^4.2.1",
+		"glob": "10.4.2",
+		"rimraf": "5.0.5"
+	},
+	"devDependencies": {
+		"@types/decompress": "^4.2.7",
+		"@types/node": "^20.14.9",
+		"ts-node": "10.9.2",
+		"typescript": "5.4.5"
+	}
+}
