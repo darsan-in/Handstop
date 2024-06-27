@@ -144,6 +144,7 @@ function install(installation: installationOptions) {
 			function () {
 				console.log("HandbrakeCLI installation complete");
 				fs.unlinkSync(installation.archive);
+				process.exit(0);
 			} as any,
 		);
 	} as any);
@@ -231,4 +232,7 @@ async function main() {
 	}
 }
 
-main();
+main().catch((err: Error) => {
+	console.log(err.message);
+	process.exit(1);
+});

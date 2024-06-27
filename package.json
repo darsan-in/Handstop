@@ -30,10 +30,10 @@
 	"license": "GPL-3.0-only",
 	"private": false,
 	"scripts": {
-		"dev": "rimraf dist && tsc -p tscdev.json",
+		"dev": "rimraf dist && tsc -p tscdev.json && ncp ./presets ./dist/presets",
 		"dr": "cls && yarn dev && yarn rp",
 		"rp": "node ./dist/handstop.js",
-		"build": "cls && rimraf dist && tsc -p tsconfig.json",
+		"build": "cls && rimraf dist && tsc -p tsconfig.json && ncp ./presets ./dist/presets",
 		"watch": "tsc --watch",
 		"clean": "cls && rimraf dist",
 		"deploy": "yarn build && yarn publish --access public && git push",
@@ -51,12 +51,12 @@
 	],
 	"dependencies": {
 		"decompress": "^4.2.1",
-		"glob": "10.4.2",
 		"rimraf": "5.0.5"
 	},
 	"devDependencies": {
 		"@types/decompress": "^4.2.7",
 		"@types/node": "^20.14.9",
+		"ncp": "2.0.0",
 		"ts-node": "10.9.2",
 		"typescript": "5.4.5"
 	}
