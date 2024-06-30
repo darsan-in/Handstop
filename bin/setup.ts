@@ -2,17 +2,26 @@
 
 import { exec } from "child_process";
 import decompress from "decompress";
-import fs from "fs";
+import {
+	createReadStream,
+	createWriteStream,
+	existsSync,
+	mkdirSync,
+	rmSync,
+} from "fs";
 import { get } from "https";
-import path from "path";
-import { rimrafSync } from "rimraf";
-import util from "util";
+import { join } from "path";
+import { format } from "util";
 
-async function _getLatestRelease(
-	owner: string,
-	repo: string,
-): Promise<string> {
-	const options = {
+interface installationOptions {
+	url: string;
+	archive: string;
+	copyFrom: string;
+	copyTo: string;
+}
+
+function _getLatestRelease(owner: string, repo: string): Promise<string> {
+	const options: Record<string, string | Record<string, string>> = {
 		hostname: "api.github.com",
 		path: `/repos/${owner}/${repo}/releases/latest`,
 		method: "GET",
@@ -41,28 +50,24 @@ async function _getLatestRelease(
 					);
 				}
 			});
-		}).on("error", (err) => {
-			reject(`Error: ${err.message}`);
+		}).on("error", (err: Error) => {
+			reject(`Error: ${err}`);
 		});
 	});
 }
 
-function _downloadFile(from: string, to: string, done: () => {}) {
-	console.log("fetching: " + from);
-
-	get(from, (response) => {
+function _downloadFile(
+	sourceUrl: string,
+	to: string,
+	done: Function,
+): void {
+	get(sourceUrl, (response) => {
 		if (response.statusCode === 200) {
-			console.log(
-				`Downloading HandbrakeCLI (${Number(
-					response.headers["content-length"],
-				).toLocaleString()} bytes) `,
-			);
+			const fileStream = createWriteStream(to);
 
-			const fileStream = fs.createWriteStream(to);
 			response.pipe(fileStream);
 
 			fileStream.on("finish", () => {
-				console.log(`File downloaded successfully to ${to}`);
 				done();
 			});
 		} else if (response.statusCode === 302) {
@@ -74,8 +79,8 @@ function _downloadFile(from: string, to: string, done: () => {}) {
 				`Failed to download Handbrake: ${response.statusCode} ${response.statusMessage}`,
 			);
 		}
-	}).on("error", (err) => {
-		console.error(`Error downloading file: ${err.message}`);
+	}).on("error", (err: Error) => {
+		console.error(`Error downloading file: ${err}`);
 	});
 }
 
@@ -83,27 +88,31 @@ function _extractFile(
 	archive: string,
 	copyFrom: string,
 	copyTo: string,
-	done: () => {},
-) {
-	console.log("extracting: " + copyFrom);
+	done: Function,
+): void {
+	console.log("extracting: " + archive);
+
+	const tempOPFolder: string = archive.split(".")[0];
 
 	if (archive.indexOf(".zip") > 0) {
-		if (!fs.existsSync("unzipped")) fs.mkdirSync("unzipped");
-		decompress(archive, "unzipped").then(() => {
-			const source = fs.createReadStream(copyFrom);
-			const dest = fs.createWriteStream(copyTo);
-
-			dest.on("close", function () {
-				rimrafSync("unzipped");
-				done();
-			});
+		decompress(archive, tempOPFolder).then(() => {
+			const source = createReadStream(copyFrom);
+			const dest = createWriteStream(copyTo);
 
 			source.pipe(dest);
+
+			dest.on("close", () => {
+				rmSync(tempOPFolder, { recursive: true, force: true });
+				done();
+			});
 		});
 	} else if (archive.indexOf(".dmg") > 0) {
 		const cmd: string = "hdiutil attach " + archive;
+
 		exec(cmd, function (err, stdout) {
-			if (err) throw err;
+			if (err) {
+				throw err;
+			}
 
 			const match = stdout.match(/^(\/dev\/\w+)\b.*(\/Volumes\/.*)$/m);
 
@@ -111,12 +120,14 @@ function _extractFile(
 				const devicePath = match[1];
 				const mountPath = match[2];
 
-				copyFrom = path.join(mountPath, copyFrom);
+				copyFrom = join(mountPath, copyFrom);
 
-				const source = fs.createReadStream(copyFrom);
-				const dest = fs.createWriteStream(copyTo, {
+				const source = createReadStream(copyFrom);
+				const dest = createWriteStream(copyTo, {
 					mode: 755,
 				});
+
+				source.pipe(dest);
 
 				dest.on("close", function () {
 					exec("hdiutil detach " + devicePath, function (err) {
@@ -124,7 +135,6 @@ function _extractFile(
 						done();
 					});
 				});
-				source.pipe(dest);
 			}
 		});
 	} else {
@@ -133,32 +143,29 @@ function _extractFile(
 	}
 }
 
-function install(installation: installationOptions) {
-	_downloadFile(installation.url, installation.archive, function () {
-		if (!fs.existsSync("bin")) fs.mkdirSync("bin");
+function install(installation: installationOptions): void {
+	console.log("fetching: " + installation.url);
+
+	_downloadFile(installation.url, installation.archive, () => {
+		if (!existsSync("bin")) {
+			mkdirSync("bin", { recursive: true });
+		}
 
 		_extractFile(
 			installation.archive,
 			installation.copyFrom,
 			installation.copyTo,
-			function () {
+			() => {
 				console.log("HandbrakeCLI installation complete");
-				fs.unlinkSync(installation.archive);
+				rmSync(installation.archive, { recursive: true, force: true });
 				process.exit(0);
-			} as any,
+			},
 		);
-	} as any);
+	});
 }
 
-interface installationOptions {
-	url: string;
-	archive: string;
-	copyFrom: string;
-	copyTo: string;
-}
-
-function go(installation: installationOptions, version: string) {
-	if (fs.existsSync(path.resolve(__dirname, "..", installation.copyTo))) {
+function go(installation: installationOptions, version: string): void {
+	if (existsSync(installation.copyTo)) {
 		exec(
 			installation.copyTo + " --version",
 			function (err, stdout, _stderr) {
@@ -178,8 +185,8 @@ function go(installation: installationOptions, version: string) {
 	}
 }
 
-async function main() {
-	const downloadPath =
+async function main(): Promise<void> {
+	const downloadPath: string =
 		"https://github.com/HandBrake/HandBrake/releases/download/%s/HandBrakeCLI-%s%s";
 
 	const version: string = await _getLatestRelease(
@@ -190,10 +197,10 @@ async function main() {
 	if (process.platform === "darwin") {
 		go(
 			{
-				url: util.format(downloadPath, version, version, ".dmg"),
+				url: format(downloadPath, version, version, ".dmg"),
 				archive: "mac.dmg",
 				copyFrom: "HandbrakeCLI",
-				copyTo: path.join("bin", "HandbrakeCLI"),
+				copyTo: join("bin", "HandbrakeCLI"),
 			},
 			version,
 		);
@@ -203,17 +210,14 @@ async function main() {
 			process.exit(1);
 		}
 
+		const archive: string = "cli.zip";
+
 		go(
 			{
-				url: util.format(
-					downloadPath,
-					version,
-					version,
-					"-win-x86_64.zip",
-				),
-				archive: "win.zip",
-				copyFrom: path.join("unzipped", "HandBrakeCLI.exe"),
-				copyTo: path.join("bin", "HandbrakeCLI.exe"),
+				url: format(downloadPath, version, version, "-win-x86_64.zip"),
+				archive: archive,
+				copyFrom: join(archive.split(".")[0], "HandBrakeCLI.exe"),
+				copyTo: join("bin", "HandbrakeCLI.exe"),
 			},
 			version,
 		);

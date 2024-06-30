@@ -1,7 +1,7 @@
 {
 	"name": "handstop",
 	"displayName": "Handstop",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "Handbrake video encoder api for node js",
 	"main": "./dist/handstop.js",
 	"exports": {
@@ -50,13 +50,13 @@
 		"Efficient"
 	],
 	"dependencies": {
-		"decompress": "^4.2.1",
-		"rimraf": "5.0.5"
+		"decompress": "4.2.1"
 	},
 	"devDependencies": {
-		"@types/decompress": "^4.2.7",
+		"@types/decompress": "4.2.7",
 		"@types/node": "^20.14.9",
 		"ncp": "2.0.0",
+		"rimraf": "5.0.5",
 		"ts-node": "10.9.2",
 		"typescript": "5.4.5"
 	}
