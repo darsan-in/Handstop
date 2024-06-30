@@ -1,7 +1,7 @@
 {
 	"name": "handstop",
 	"displayName": "Handstop",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"description": "Handbrake video encoder api for node js",
 	"main": "./dist/handstop.js",
 	"exports": {
@@ -27,7 +27,7 @@
 	"maintainers": [
 		"DARSAN <darsan@cresteem.com>"
 	],
-	"license": "GPL-3.0-only",
+	"license": "Apache-2.0",
 	"private": false,
 	"scripts": {
 		"dev": "rimraf dist && tsc -p tscdev.json && ncp ./presets ./dist/presets",
