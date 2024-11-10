@@ -75,18 +75,6 @@
 
 ---
 
-<p>
-
-<span>
-  <a href="https://github.com/sponsors/darsan-in">
-    <img src="https://img.shields.io/github/sponsors/darsan-in?style=for-the-badge&label=Generous%20Sponsors" alt="GitHub Sponsors"/>
-  </a>
-</span>
-
-</p>
-
----
-
 </div>
 
 ## Table of Contents 📝
@@ -205,63 +193,39 @@ Special thanks to:
 <p align="center">
 
 <span>
-<a href="https://www.linkedin.com/in/darsan-in/"><img width='45px' height='45px' src="https://raw.githubusercontent.com/darsan-in/.github/main/brand/footer-icons/linkedin.png" alt="Darsan at Linkedin"></a>
+<a href="https://www.linkedin.com/in/darsan-in/"><img width='45px' height='45px' src="https://darsan.in/readme-src/footer-icons/linkedin.png" alt="Darsan at Linkedin"></a>
 </span>
 
 <span>
-  <img width='20px' height='20px' src="https://raw.githubusercontent.com/darsan-in/.github/main/brand/footer-icons/gap.png" alt="place holder image">
+  <img width='20px' height='20px' src="https://darsan.in/readme-src/footer-icons/gap.png" alt="place holder image">
 </span>
 
 <span>
-<a href="https://www.youtube.com/@darsan-in"><img width='45px' height='45px' src="https://raw.githubusercontent.com/darsan-in/.github/main/brand/footer-icons/youtube.png" alt="Darsan at Youtube"></a>
+<a href="https://www.youtube.com/@darsan-in"><img width='45px' height='45px' src="https://darsan.in/readme-src/footer-icons/youtube.png" alt="Darsan at Youtube"></a>
 </span>
 
 <span>
-  <img width='20px' height='20px' src="https://raw.githubusercontent.com/darsan-in/.github/main/brand/footer-icons/gap.png" alt="place holder image">
+  <img width='20px' height='20px' src="https://darsan.in/readme-src/footer-icons/gap.png" alt="place holder image">
 </span>
 
 <span>
-<a href="https://www.facebook.com/darsan.in/"><img width='45px' height='45px' src="https://raw.githubusercontent.com/darsan-in/.github/main/brand/footer-icons/facebook.png" alt="Darsan at Facebook"></a>
+<a href="https://www.npmjs.com/~darsan.in"><img width='45px' height='45px' src="https://darsan.in/readme-src/footer-icons/npm.png" alt="Darsan at NPM"></a>
 </span>
 
 <span>
-  <img width='20px' height='20px' src="https://raw.githubusercontent.com/darsan-in/.github/main/brand/footer-icons/gap.png" alt="place holder image">
+  <img width='20px' height='20px' src="https://darsan.in/readme-src/footer-icons/gap.png" alt="place holder image">
 </span>
 
 <span>
-<a href="https://www.npmjs.com/~darsan.in"><img width='45px' height='45px' src="https://raw.githubusercontent.com/darsan-in/.github/main/brand/footer-icons/npm.png" alt="Darsan at NPM"></a>
+<a href="https://github.com/darsan-in"><img width='45px' height='45px' src="https://darsan.in/readme-src/footer-icons/github.png" alt="Darsan at Github"></a>
 </span>
 
 <span>
-  <img width='20px' height='20px' src="https://raw.githubusercontent.com/darsan-in/.github/main/brand/footer-icons/gap.png" alt="place holder image">
+  <img width='20px' height='20px' src="https://darsan.in/readme-src/footer-icons/gap.png" alt="place holder image">
 </span>
 
 <span>
-<a href="https://github.com/darsan-in"><img width='45px' height='45px' src="https://raw.githubusercontent.com/darsan-in/.github/main/brand/footer-icons/github.png" alt="Darsan at Github"></a>
-</span>
-
-<span>
-  <img width='20px' height='20px' src="https://raw.githubusercontent.com/darsan-in/.github/main/brand/footer-icons/gap.png" alt="place holder image">
-</span>
-
-<span>
-<a href="https://huggingface.co/darsan"><img width='45px' height='45px' src="https://raw.githubusercontent.com/darsan-in/.github/main/brand/footer-icons/hf.png" alt="Darsan at Huggingface"></a>
-</span>
-
-<span>
-  <img width='20px' height='20px' src="https://raw.githubusercontent.com/darsan-in/.github/main/brand/footer-icons/gap.png" alt="place holder image">
-</span>
-
-<span>
-<a href="https://www.reddit.com/user/iamspdarsan/"><img width='45px' height='45px' src="https://raw.githubusercontent.com/darsan-in/.github/main/brand/footer-icons/reddit.png" alt="Darsan at Reddit"></a>
-</span>
-
-<span>
-  <img width='20px' height='20px' src="https://raw.githubusercontent.com/darsan-in/.github/main/brand/footer-icons/gap.png" alt="place holder image">
-</span>
-
-<span>
-<a href="https://darsan.in/"><img width='45px' height='45px' src="https://raw.githubusercontent.com/darsan-in/.github/main/brand/footer-icons/website.png" alt="Darsan Website"></a>
+<a href="https://darsan.in/"><img width='45px' height='45px' src="https://darsan.in/readme-src/footer-icons/website.png" alt="Darsan Website"></a>
 </span>
 
 <p>
